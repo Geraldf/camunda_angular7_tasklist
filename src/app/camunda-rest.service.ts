@@ -1,4 +1,5 @@
 import { Observable } from "rxjs/Observable";
+import "rxjs/Observable/throw";
 import { of } from "rxjs/observable/of";
 import { catchError, map, tap } from "rxjs/operators";
 import { Injectable } from "@angular/core";
@@ -99,9 +100,9 @@ export class CamundaRestService {
 
       // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}`);
-
+      return Observable.throw(error.message || "Server Error");
       // Let the app keep running by returning an empty result.
-      return of(result as T);
+      // return of(result as T);
     };
   }
 

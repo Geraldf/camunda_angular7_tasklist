@@ -1,23 +1,39 @@
 <div class="container">
   <div [hidden]="submitted">
     <h1>Start New Process Form</h1>
+    <h3>{{ errMsg }}</h3>
     <form (ngSubmit)="onSubmit()" #startNewProcess="ngForm" class="ui form">
       <div class="field">
         <label for="firstName">First Name</label>
-        <input type="text" id="firstName"
-               required
-               [(ngModel)]="model.firstName" name="firstName"
-               #name="ngModel">
+        <input
+          type="text"
+          id="firstName"
+          required
+          [(ngModel)]="model.firstName"
+          name="firstName"
+          #name="ngModel"
+        />
       </div>
 
       <div class="field">
         <label for="lastName">Last Name</label>
-        <input type="text" id="lastName"
-               [(ngModel)]="model.lastName" name="lastName" #name="ngModel">
+        <input
+          type="text"
+          id="lastName"
+          [(ngModel)]="model.lastName"
+          name="lastName"
+          #name="ngModel"
+        />
       </div>
 
       <div class="field">
-        <button type="submit" class="ui button" [disabled]="!startNewProcess.form.valid">Start Process</button>
+        <button
+          type="submit"
+          class="ui button"
+          [disabled]="!startNewProcess.form.valid"
+        >
+          Start Process
+        </button>
       </div>
     </form>
   </div>
