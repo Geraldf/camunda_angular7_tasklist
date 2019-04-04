@@ -23,7 +23,6 @@
     "ng2-semantic-ui": "^0.9.7",
     "rxjs": "~6.3.3",
     "rxjs-compat": "^6.4.0",
-    "semantic-ui": "^2.4.2",
     "semantic-ui-css": "^2.4.1",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"
