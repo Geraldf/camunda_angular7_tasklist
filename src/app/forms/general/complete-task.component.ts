@@ -2,15 +2,15 @@ import { CamundaRestService } from '../../camunda-rest.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 export class CompleteTaskComponent {
-  model
-  submitted
-  route: ActivatedRoute
-  router: Router
-  camundaRestService: CamundaRestService
+  model;
+  submitted;
+  route: ActivatedRoute;
+  router: Router;
+  camundaRestService: CamundaRestService;
 
   constructor(route: ActivatedRoute,
-    router: Router,
-    camundaRestService: CamundaRestService,
+              router: Router,
+              camundaRestService: CamundaRestService,
     ) {
       this.route = route;
       this.router = router;
@@ -18,14 +18,15 @@ export class CompleteTaskComponent {
   }
   onSubmit() {
     this.route.params.subscribe(params => {
-      const taskId = params['id'];
+      const taskId = params.id;
       const variables = this.generateVariablesFromFormFields();
       this.camundaRestService.postCompleteTask(taskId, variables).subscribe();
       this.submitted = true;
       this.router.navigate(['/tasklist']);
     });
   }
-  loadExistingVariables(taskId: String, variableNames: String) {
+// tslint:disable-next-line: ban-types
+  loadExistingVariables({ taskId, variableNames }: { taskId: String; variableNames: String; }) {
     this.camundaRestService.getVariablesForTask(taskId, variableNames).subscribe((result) => {
       this.generateModelFromVariables(result);
     });
