@@ -17,7 +17,7 @@ export class StartProcessInstanceComponent {
       const variables = this.generateVariablesFromFormFields();
       this.camundaRestService
         .postProcessInstance(processDefinitionKey, variables)
-        .subscribe(error => (this.errMsg = error));
+        .subscribe();
       this.submitted = true;
     });
   }
