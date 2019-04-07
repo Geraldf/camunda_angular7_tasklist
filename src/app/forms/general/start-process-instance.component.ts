@@ -1,25 +1,32 @@
 import { CamundaRestService } from "../../camunda-rest.service";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { OnInit, OnDestroy } from "@angular/core";
-import { Subject } from "rxjs";
+import { Subject, Subscription } from "rxjs";
+import { routerNgProbeToken } from "@angular/router/src/router_module";
 
-export class StartProcessInstanceComponent {
+export class StartProcessInstanceComponent implements OnDestroy {
   model: { [x: string]: any };
   submitted: boolean;
   error: boolean;
   route: ActivatedRoute;
   camundaRestService: CamundaRestService;
   errMsg: any;
+  private paramsSubscription: Subscription;
+  private restSubscription: Subscription;
 
-  constructor(route: ActivatedRoute, camundaRestService: CamundaRestService) {
+  constructor(
+    route: ActivatedRoute,
+    camundaRestService: CamundaRestService,
+    private router: Router
+  ) {
     this.route = route;
     this.camundaRestService = camundaRestService;
   }
   onSubmit() {
-    this.route.params.subscribe(params => {
+    this.paramsSubscription = this.route.params.subscribe(params => {
       const processDefinitionKey = params["processdefinitionkey"];
       const variables = this.generateVariablesFromFormFields();
-      this.camundaRestService
+      this.restSubscription = this.camundaRestService
         .postProcessInstance(processDefinitionKey, variables)
         .subscribe(
           result => {
@@ -46,5 +53,11 @@ export class StartProcessInstanceComponent {
     });
 
     return variables;
+  }
+
+  ngOnDestroy() {
+    this.restSubscription.unsubscribe();
+    this.paramsSubscription.unsubscribe();
+    this.router.navigate(["/home"]);
   }
 }

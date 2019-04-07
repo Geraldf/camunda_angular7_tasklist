@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { CamundaRestService } from "../../camunda-rest.service";
 import { StartProcessInstanceComponent } from "../general/start-process-instance.component";
 import { MyProcessData } from "../../schemas/MyProcessData";
@@ -12,10 +12,14 @@ import { MyProcessData } from "../../schemas/MyProcessData";
 export class startNewProcessComponent extends StartProcessInstanceComponent {
   submitted: boolean = false;
   error: boolean = false;
-  model = new MyProcessData("", "", false);
+  model = new MyProcessData("", "", "", false);
   errMsg: any;
 
-  constructor(route: ActivatedRoute, camundaRestService: CamundaRestService) {
-    super(route, camundaRestService);
+  constructor(
+    route: ActivatedRoute,
+    camundaRestService: CamundaRestService,
+    router: Router
+  ) {
+    super(route, camundaRestService, router);
   }
 }
