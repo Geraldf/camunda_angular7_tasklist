@@ -11,8 +11,9 @@ import { MyProcessData } from "../../schemas/MyProcessData";
 })
 export class startNewProcessComponent extends StartProcessInstanceComponent {
   submitted: boolean = false;
+  error: boolean = false;
   model = new MyProcessData("", "", false);
-  errMsg;
+  errMsg: any;
 
   constructor(route: ActivatedRoute, camundaRestService: CamundaRestService) {
     super(route, camundaRestService);

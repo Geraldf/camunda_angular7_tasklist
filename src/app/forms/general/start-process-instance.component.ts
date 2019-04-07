@@ -1,12 +1,16 @@
 import { CamundaRestService } from "../../camunda-rest.service";
 import { ActivatedRoute } from "@angular/router";
+import { OnInit, OnDestroy } from "@angular/core";
+import { Subject } from "rxjs";
 
 export class StartProcessInstanceComponent {
-  model;
-  submitted;
+  model: { [x: string]: any };
+  submitted: boolean;
+  error: boolean;
   route: ActivatedRoute;
   camundaRestService: CamundaRestService;
-  errMsg;
+  errMsg: any;
+
   constructor(route: ActivatedRoute, camundaRestService: CamundaRestService) {
     this.route = route;
     this.camundaRestService = camundaRestService;
@@ -17,10 +21,20 @@ export class StartProcessInstanceComponent {
       const variables = this.generateVariablesFromFormFields();
       this.camundaRestService
         .postProcessInstance(processDefinitionKey, variables)
-        .subscribe();
-      this.submitted = true;
+        .subscribe(
+          result => {
+            this.submitted = true;
+            this.error = false;
+          },
+          err => {
+            this.errMsg = err;
+            this.error = true;
+          }
+        );
+      //this.submitted = true;
     });
   }
+
   generateVariablesFromFormFields() {
     const variables = {
       variables: {}

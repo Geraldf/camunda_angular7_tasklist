@@ -1,7 +1,13 @@
 <div class="container">
   <div [hidden]="submitted">
     <h1>Start New Process Form</h1>
-    <h3>{{ errMsg }}</h3>
+    <div class="ui negative message" [hidden]="!error">
+      <div class="header">
+        {{ errMsg.titel }}
+      </div>
+      <p>{{ errMsg.detail }}</p>
+    </div>
+
     <form (ngSubmit)="onSubmit()" #startNewProcess="ngForm" class="ui form">
       <div class="field">
         <label for="firstName">First Name</label>

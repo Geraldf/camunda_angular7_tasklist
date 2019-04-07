@@ -1,6 +1,7 @@
 import { Observable } from "rxjs/Observable";
+import { _throw } from "rxjs/observable/throw";
 
-import { throwError } from 'rxjs';
+import { throwError } from "rxjs";
 import { of } from "rxjs/observable/of";
 import { catchError, map, tap } from "rxjs/operators";
 import { Injectable } from "@angular/core";
@@ -103,8 +104,11 @@ export class CamundaRestService {
       this.log(`${operation} failed: ${error.message}`);
       // return Observable.throw(error.message || "Server Error");
       // Let the app keep running by returning an empty result.
-      return Observable.throw(new Error(error.message));
-      return of(result as T);
+      return throwError({
+        titel: error.message,
+        detail: error.error.message
+      });
+      // return of(result as T);
     };
   }
 
